@@ -129,6 +129,25 @@ help:
 #we use ffmpeg's version for some reason, as opposed to libav. not sure what the differences are meant to be, but libav seemed to have non-depricated functions defined, docs that say to use them, and these functions missing.
 
 AV_VER=ffmpeg-4.0
+ifeq (0,1)
+    AV_ARCHIVEEXT=.z7
+    AV_EXTRACT=7z e -y
+else
+    AV_ARCHIVEEXT=.zip
+    AV_EXTRACT=unzip -ju
+endif
+AV_W32_DEV=$(AV_VER)-win32-dev$(AV_ARCHIVEEXT)
+AV_W64_DEV=$(AV_VER)-win64-dev$(AV_ARCHIVEEXT)
+AV_W32_BIN=$(AV_VER)-win32-shared$(AV_ARCHIVEEXT)
+AV_W64_BIN=$(AV_VER)-win64-shared$(AV_ARCHIVEEXT)
+AV_URL32_DEV=https://web.archive.org/web/20200914220232/https://ffmpeg.zeranoe.com/builds/win32/dev/$(AV_W32_DEV)
+AV_URL64_DEV=https://web.archive.org/web/20200914204027/https://ffmpeg.zeranoe.com/builds/win64/dev/$(AV_W64_DEV)
+AV_URL32_BIN=https://web.archive.org/web/20200914220638/https://ffmpeg.zeranoe.com/builds/win32/shared/$(AV_W32_BIN)
+AV_URL64_BIN=https://web.archive.org/web/20200914201114/https://ffmpeg.zeranoe.com/builds/win64/shared/$(AV_W64_BIN)
+AV_PRE32_DEV=$(AV_VER)-win32-dev/
+AV_PRE64_DEV=$(AV_VER)-win64-dev/
+AV_PRE32_BIN=$(AV_VER)-win32-shared/
+AV_PRE64_BIN=$(AV_VER)-win64-shared/
 
 ifeq ($(findstring win,$(FTE_TARGET)),win)
 	AV_BASE=$(abspath $(OUT_DIR)/../fte_libav_$(AV_VER))/
